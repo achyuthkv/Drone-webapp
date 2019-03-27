@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Admin Panel</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
+		<link rel='icon' type='image/gif' href="{% static 'img/admin.svg' %}">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-container" style="background-color: #B2E9FA;">
+			<a class="navbar-brand logo" href="#" style=" color: #192a56;">⚙️ Admin</a>
+			<a class="navbar-brand logo ml-auto" href="index.html" target="_blank" style="margin-right: 50px; margin-top: 10px;  color: #fff;">Medrones</a>
+		</nav>
+		<div class="container" style="margin-top: 6rem; margin-bottom: 10rem;">
+			<div class="row">
+				<div class="col-lg-12" style="padding-top: 20px;">
+  	            <div class="table-data" id="admin_data"></div>
+        </div>
+
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<script >
+        var fetchdata=function(){
+		$.ajax({
+        //url:"/users/api/plant_one/",
+        url:"/admin-data/",
+        dataType:"json",
+        success:function(data)
+        {
+            
+            var table_data = '<table class="table table-hover table-responsive">';
+            table_data+='<thead><tr>';
+            table_data += '<th class="small text-muted" font size="1" rowspan=2 style="vertical-align : middle;font-size:20px;">Name</th>'+
+        '<th class="small text-muted" font size="1" rowspan=2 style="vertical-align : middle;font-size:20px;">Latitude</th> '+
+        '<th class="small text-muted" font size="1" class="small text-muted" style="vertical-align : middle;font-size:20px;">Longitude</th>'+
+        '<th class="small text-muted" font size="1" rowspan=2 style="vertical-align : middle;font-size:20px;">Phone Number</th>'+
+        '<th class="small text-muted" font size="1" rowspan=2 style="vertical-align : middle;font-size:20px;">Image</th>';
+           table_data += '</tr></thead>';
+                    
+            
+         for(var count = 0; count<=data.length - 1; count=count+1)
+         {
+             //alert(count+". "+data[count][0]+"---"+data[count][1]);
+                 table_data += '<tr>';
+                 table_data += '<td class="text-muted" style = "height:100px;width:350px;font-size: 35px;">'+data[count][0]+'</td>';
+                 table_data += '<td class="text-muted"style = "height:100px;width:350px;font-size: 40px;"><span class="label label-info label-outlined">'+   parseFloat(Number(data[count][1]).toFixed(6));+'</span></td>';
+                 table_data += '<td class="text-muted" style = "height:100px;width:350px;font-size: 40px;"><span class="label label-info label-outlined">'+  parseFloat(Number(data[count][2]).toFixed(6));+'</span></td>';
+                 table_data += '<td class="text-muted" style = "height:100px;width:350px;font-size: 40px;"><span class="label label-secondary label-outlined">'+ data[count][3]+'</td>';
+                table_data += '<td style = "width:250px;"><img src='+data[count][4]+ ' style = "height:100px;width:300px;"></td>';
+
+                
+            table_data += '</tr>';
+            $('#admin_data').html(table_data);
+        }}
+    });
+}
+$(document).ready(function(){
+ setInterval(fetchdata,5000);
+});
+
+</script>
+	</body>
+}
+</html>

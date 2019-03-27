@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Medrones</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
+		<link rel='icon' type='image/gif' href="{% static 'img/drone-delivery.png' %}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-container">
+			<div class="logo">
+				<img src="{% static 'img/drone-delivery.png' %}" style="width: 2rem;" alt="🚁 ">
+				<a class="navbar-brand" href="#"> Medrones</a>
+			</div>
+			<button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto nav-list">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">🏠Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">🎁Request Supply</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#how-it-works">⚙️How it Works</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#why-drones">💊Why Medical Drones</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#about-us">👨‍🏫About Us</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="icon-bar">
+			<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+			<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+			<a href="#" class="google"><i class="fa fa-google"></i></a>
+			<a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+			<a href="#" class="youtube"><i class="fa fa-youtube"></i></a>
+		</div>
+		<div class="hero">
+			<div class="container paddding">
+				<div class="row padding">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<h1 class="display-3 hero-head">Request Emergency Help</h1>
+						<h5 class="hero-subhead">Request emergency help for self / friends / family.<br>Be a good samaritan and help a stranger in distress</h5>
+						<button type="button" class="btn btn-primary btn-lg hero-button" data-toggle="modal" data-target="#exampleModal">Request medical Supplies</button>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<img class="img-fluid hero-img" src="{% static 'img/drone-delivery' %}.gif" alt="Drone Delivery">
+					</div>
+				</div>
+				<div class="row padding">
+					<div class="col-sm-12 col-md-6 col-lg-6"></div>
+					<div class="col-sm-12 col-md-1 col-lg-1">
+						<a href="#how-it-works">
+							<img class="img-fluid img_scroll" src="{% static 'img/circle.png' %}" alt="Scroll Button">
+						</a>
+					</div>
+					<div class="col-sm-12 col-md-5 col-lg-5"></div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Your Details</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form method="POST" action="/home/" id="post-form" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="form-group">
+								<button type="button" class="btn btn-primary btn-md" id="geolocation" value="" onclick="getLocation()" required>Use my location</button>
+							</div>
+							<div class="form-group">
+								<input type="hidden" class="form-control" id="lat" name="lat">
+								<input type="hidden" class="form-control" id="long" name="long">
+							</div>
+							<!-- <p id="demo"></p> -->
+							<div class="form-group">
+								<label for="name" class="form-name">Name</label>
+								<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+								<small id="name" class="form-text text-muted">We'll never share your details with anyone else.</small>
+							</div>
+							<div class="form-group">
+								<label for="phone" class="form-phone">Phone No.</label>
+								<input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+							</div>
+							<div class="form-group">
+							<p>Upload Image(Optional)</label>
+							<input type="file" class="form-control-file" name="image">
+						</div>
+						<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="a-page" id="how-it-works">
+		<div class="container-fluid padding">
+			<div class="row">
+				<div class="col-12">
+					<div class="a-page-title">
+						<h1 class="display-4">How it works</h1>
+						<h5>Requesting first aid has never been this way.</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<diimg-fluid v class="row padding">
+			<div class="col-sm-6 col-md-4">
+				<div class="work-div">
+					<img class="img-fluid a-page-img" src="{% static 'img/gps.png' %}" alt="Mobile GPS">
+					<p class="a-page-p">Upload your current GPS location</p>
+				</div>
+			</div><br>
+			<div class="col-sm-6 col-md-4">
+				<div class="work-div">
+					<img class="img-fluid a-page-img" src="{% static 'img/drone-delivery' %}.png" alt="Drone Delivery">
+					<p class="img-fluid a-page-p">Drone carries first aid to your location</p>
+				</div>
+			</div><br>
+			<div class="col-sm-6 col-md-4">
+				<div class="work-div">
+					<img class="img-fluid a-page-img img-3" src="{% static 'img/first-aid' %}-kit.png" alt="First Aid Kit">
+					<p class="a-page-p">Pick up your first aid kit</p>
+				</div>
+			</div><br>
+		</div>
+	</div>
+</div>
+<div class="b-page" id="why-drones">
+	<div class="container-fluid padding">
+		<div class="row">
+			<div class="col-12">
+				<div class="b-page-title">
+					<h1 class="display-4">Why should you care?</h1>
+					<h5>Emergency is big problem in India.</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row padding">
+			<div class="col-sm-6 col-md-3">
+				<div class="b-page-asset">
+					<img class="img-fluid b-page-img" src="{% static 'img/cardiac.jpeg' %}" alt="Cardiac Arrest">
+				</div>
+			</div><br>
+			<div class="col-sm-6 col-md-3">
+				<div class="b-page-text">
+					<h4>1 Min</h4>
+					<p>1 life lost to Cardiac</p>
+				</div>
+			</div><br>
+			<div class="col-sm-6 col-md-3">
+				<div class="b-page-asset">
+					<img class="img-fluid b-page-img" src="{% static 'img/car.jpg' %}" alt="Car Accident">
+				</div>
+			</div><br>
+			<div class="col-sm-6 col-md-3">
+				<div class="b-page-text">
+					<h4>4 Min</h4>
+					<p>1 life lost - Accident</p>
+				</div>
+			</div><br>
+		</div>
+	</div>
+</div>
+<div class="c-page" id="about-us">
+	<div class="container-fluid padding">
+		<div class="row">
+			<div class="col-12">
+				<div class="c-page-title">
+					<h1 class="display-3">Our mission is to improve survivability.</h1>
+					<h5>Our Team</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row padding">
+			<div class="col-sm-6 col-md-3">
+				<div class="c-page-team">
+					<img class="img-fluid c-page-img" src="{% static 'img/man.png' %}" alt="Man"><br>
+					<h3 class="c-page-member">Team Member</h3>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="c-page-team">
+					<img class="img-fluid c-page-img" src="{% static 'img/man.png' %}" alt="Man"><br>
+					<h3 class="c-page-member">Team Member</h3>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="c-page-team">
+					<img class="img-fluid c-page-img" src="{% static 'img/man.png' %}" alt="Man"><br>
+					<h3 class="c-page-member">Team Member</h3>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<div class="c-page-team">
+					<img class="img-fluid c-page-img" src="{% static 'img/man.png' %}" alt="Man"><br>
+					<h3 class="c-page-member">Team Member</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-4">
+				<p class="footer-text">Email:<br>our-email@gmail.com</p>
+			</div><br>
+			<div class="col-lg-4">
+				<p class="footer-text">Call Us:<br>
+					+91 **********<br>
+					+91 **********
+				</p>
+			</div><br>
+			<div class="col-lg-1"></div>
+		</div>
+	</div><br>
+</footer>
+<script>
+	var lat = document.getElementById("lat");
+	var long = document.getElementById("long");
+	function getLocation() {
+	if (navigator.geolocation) {
+	navigator.geolocation.watchPosition(showPosition);
+	} else {
+	lat.innerHTML = "Geolocation is not supported by this browser.";
+	}
+	}
+	function showPosition(position) {
+	lat.value= position.coords.latitude;
+	long.value= position.coords.longitude;
+	}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
